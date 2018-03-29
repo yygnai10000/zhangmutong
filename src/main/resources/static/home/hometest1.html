@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">账目通</div>
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="javascript:;" onclick="exportExcel()">导出Excel</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        管理员
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">退了</a></li>
+            </ul>
+        </div>
+        <div class="layui-tab" style="position:absolute;width: 100px" >
+            <ul class="layui-tab-title" >
+                <li class="layui-this" lay-id="tongzhi">通知</li>
+            </ul>
+
+
+        </div>
+    </div>
+
+    <div class="layui-side layui-bg-black" >
+    左侧
+    </div>
+
+    <div class="layadmin-pagetabs">
+
+    </div>
+
+    <div class="layui-body" id="home_body">
+
+    </div>
+</div>
+<script src="../js/layui.js"></script>
+<script>
+    layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+    //基础设施人员信息
+    function  catmanage () {
+        var element = layui.element;
+        var li = $("li[lay-id="+"catmanage"+"]").length;
+        if(li>0){
+            element.tabChange('demo', 'catmanage');
+        }else {
+            element.tabAdd('demo', {
+                title: '车辆信息管理'
+                ,content: '<iframe data-frameid="'+"catmanage"+'" frameborder="0" name="content" scrolling="no" width="100%" height="650px" src="' + 'homecatmanage.html' + '"></iframe>'
+                ,id: 'catmanage'
+            });
+            element.tabChange('demo', 'catmanage');
+        }
+    }
+    function  catnumber () {
+        var element = layui.element;
+        var li = $("li[lay-id="+"catnumber"+"]").length;
+        if(li>0){
+            element.tabChange('demo', 'catnumber');
+        }else {
+            element.tabAdd('demo', {
+                title: '车次信息管理'
+                ,content: '<iframe data-frameid="'+"catnumber"+'" frameborder="0" name="content" scrolling="no" width="100%" height="650px" src="' + 'homecatnumber.html' + '"></iframe>'
+                ,id: 'catnumber'
+            });
+            element.tabChange('demo', 'catnumber');
+        }
+    }
+    function  drivermsg () {
+        var element = layui.element;
+        var li = $("li[lay-id="+"drivermsg"+"]").length;
+        if(li>0){
+            element.tabChange('demo', 'drivermsg');
+        }else {
+            element.tabAdd('demo', {
+                title: '司机信息管理'
+                ,content: '<iframe data-frameid="'+"drivermsg"+'" frameborder="0" name="content" scrolling="no" width="100%" height="650px" src="' + 'drivermsg.html' + '"></iframe>'
+                ,id: 'drivermsg'
+            });
+            element.tabChange('demo', 'drivermsg');
+        }
+    }
+    //运单  carriageOrder
+    function  carriageOrder () {
+        var element = layui.element;
+        var li = $("li[lay-id="+"carriageOrder"+"]").length;
+        if(li>0){
+            element.tabChange('demo', 'carriageOrder');
+        }else {
+            element.tabAdd('demo', {
+                title: '运单管理'
+                ,content: 'a'
+                ,id: 'carriageOrder'
+            });
+            element.tabChange('demo', 'carriageOrder');
+        }
+    }
+    function  customer () {
+        var element = layui.element;
+        var li = $("li[lay-id="+"customer"+"]").length;
+        if(li>0){
+            element.tabChange('demo', 'customer');
+        }else {
+            element.tabAdd('demo', {
+                title: '客户管理'
+                ,content: 'a'
+                ,id: 'customer'
+            });
+            element.tabChange('demo', 'customer');
+        }
+    }
+    //操作记录
+    function queryday() {
+        var element = layui.element;
+        var li = $("li[lay-id="+"queryday"+"]").length;
+        if(li>0){
+            element.tabChange('demo', 'queryday');
+        }else {
+            element.tabAdd('demo', {
+                title: '最近一天'
+                ,content: '<iframe data-frameid="'+"catmanage"+'" frameborder="0" name="content" scrolling="no" width="100%" height="650px" src="' + 'homecatmanage.html' + '"></iframe>'
+                ,id: 'queryday'
+            });
+            element.tabChange('demo', 'catmanage');
+        }
+    }
+    //exportExcel
+    function exportExcel() {
+        alert("导出excel");
+    }
+</script>
+</body>
+</html>
+</html>

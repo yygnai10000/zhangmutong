@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <style type="text/css">
+        #allpage {
+            /* 全局背景设置 */
+            height: 100%;
+            width: 100%;
+            background-image: url("../images/background9.jpg");
+            background-size: cover;
+            background-repeat:no-repeat;
+            margin: 0 auto;
+            opacity:0.9;
+            position:absolute; left:0; top:0px;
+        }
+    </style>
+</head>
+<body style="height: 100%">
+<div class="container-fluid" id="allpage">
+    <div style="height: 30%;width: 100%"></div>
+    <div class="col-lg-4 col-lg-offset-4" style="border: 1px solid #000000;background: #cccccc">
+        <div style="background: #cccccc;height: 40px" align="center">
+            <p id="msg"></p>
+        </div>
+        <form class="form-horizontal" id="loginform">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-4 control-label">管理员账号：</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="输入账号" name="adminname">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-4 control-label">管理员密码：</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="输入密码" name="password">
+                </div>
+            </div>
+            <div class="form-group" >
+                <button type="button" class="btn btn-success col-lg-offset-5" id="loginbtn">登录</button>
+                <div style="float: right">
+                    <button type="button" class="btn btn-link" >登录遇到问题？</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+<script>
+  $(function () {
+     $("#loginbtn").click(function () {
+         var data = $("form").serialize();
+         $.post("/admin/login",data,function (data) {
+             if(data.status==200){
+                 window.location.href="/admin/home";
+             }else{
+                 alert(data.msg);
+             }
+         });
+     }); 
+  });
+</script>
+</body>
+</html>

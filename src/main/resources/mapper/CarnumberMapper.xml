@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yy.mapper.CarnumberMapper" >
+  <resultMap id="BaseResultMap" type="com.yy.pojo.Carnumber" >
+    <id column="number" property="number" jdbcType="INTEGER" />
+    <result column="startsite" property="startsite" jdbcType="VARCHAR" />
+    <result column="endsite" property="endsite" jdbcType="VARCHAR" />
+    <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="driverid" property="driverid" jdbcType="INTEGER" />
+    <result column="catid" property="catid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    number, startsite, endsite, starttime, endtime, driverid, catid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yy.pojo.CarnumberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from carnumber
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from carnumber
+    where number = #{number,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from carnumber
+    where number = #{number,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yy.pojo.CarnumberExample" >
+    delete from carnumber
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yy.pojo.Carnumber" >
+    insert into carnumber (number, startsite, endsite, 
+      starttime, endtime, driverid, 
+      catid)
+    values (#{number,jdbcType=INTEGER}, #{startsite,jdbcType=VARCHAR}, #{endsite,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{driverid,jdbcType=INTEGER}, 
+      #{catid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yy.pojo.Carnumber" >
+    insert into carnumber
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="startsite != null" >
+        startsite,
+      </if>
+      <if test="endsite != null" >
+        endsite,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="driverid != null" >
+        driverid,
+      </if>
+      <if test="catid != null" >
+        catid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="startsite != null" >
+        #{startsite,jdbcType=VARCHAR},
+      </if>
+      <if test="endsite != null" >
+        #{endsite,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="driverid != null" >
+        #{driverid,jdbcType=INTEGER},
+      </if>
+      <if test="catid != null" >
+        #{catid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yy.pojo.CarnumberExample" resultType="java.lang.Integer" >
+    select count(*) from carnumber
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update carnumber
+    <set >
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.startsite != null" >
+        startsite = #{record.startsite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endsite != null" >
+        endsite = #{record.endsite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null" >
+        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.driverid != null" >
+        driverid = #{record.driverid,jdbcType=INTEGER},
+      </if>
+      <if test="record.catid != null" >
+        catid = #{record.catid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update carnumber
+    set number = #{record.number,jdbcType=INTEGER},
+      startsite = #{record.startsite,jdbcType=VARCHAR},
+      endsite = #{record.endsite,jdbcType=VARCHAR},
+      starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      driverid = #{record.driverid,jdbcType=INTEGER},
+      catid = #{record.catid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yy.pojo.Carnumber" >
+    update carnumber
+    <set >
+      <if test="startsite != null" >
+        startsite = #{startsite,jdbcType=VARCHAR},
+      </if>
+      <if test="endsite != null" >
+        endsite = #{endsite,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="driverid != null" >
+        driverid = #{driverid,jdbcType=INTEGER},
+      </if>
+      <if test="catid != null" >
+        catid = #{catid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where number = #{number,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yy.pojo.Carnumber" >
+    update carnumber
+    set startsite = #{startsite,jdbcType=VARCHAR},
+      endsite = #{endsite,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      driverid = #{driverid,jdbcType=INTEGER},
+      catid = #{catid,jdbcType=VARCHAR}
+    where number = #{number,jdbcType=INTEGER}
+  </update>
+</mapper>

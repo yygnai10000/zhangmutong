@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../layui/layui.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">车牌</label>
+        <div class="layui-input-block">
+            <input type="text" name="catid" required  lay-verify="required" placeholder="请输入车牌" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">车型</label>
+        <div class="layui-input-block">
+            <input type="text" name="catname" required lay-verify="required" placeholder="请输入车型" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">载货量</label>
+        <div class="layui-input-block">
+            <input type="text" name="boatload" required lay-verify="required" placeholder="请输入数字，单位/件" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">车辆所在位置</label>
+        <div class="layui-input-block">
+            <input type="text" name="location" required lay-verify="required" placeholder="比如 ： 武汉" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">购买时间</label>
+        <div class="layui-input-inline">
+            <input type="text" name="buytime" class="layui-input" required lay-verify="required" id="Cndate" placeholder="yyyy-MM-dd" autocomplete="off" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="status" title="正常" value="正常" checked>
+            <input type="radio" name="status" title="维修" value="维修">
+            <input type="radio" name="status" title="报废"value="报废">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input type="text" name="msg" class="layui-input"  placeholder="车情况备注">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" type="button" lay-submit lay-filter="formAddCat">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button type="reset" class="layui-btn layui-btn-danger" onclick="closewin()">关闭</button>
+        </div>
+    </div>
+</form>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+        var index = parent.layer.getFrameIndex(window.name);
+        //监听提交
+        form.on('submit(formAddCat)', function(data1){
+            $.ajax({
+                type: "post",
+                url: "/catmanage/addcat",
+                data: JSON.stringify(data1.field),
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+                success: function(data) {
+                    if(data.status==200){
+                        parent.layer.msg("添加成功");
+                        parent.layer.close(index);
+                        parent.location.reload(); // 父页面刷新
+                    }else{
+                        layer.msg(data.msg);
+                        return;
+                    }
+                }
+            });
+        });
+    });
+    layui.use("laydate",function () {
+        var laydate = layui.laydate;
+        //常规用法
+        laydate.render({
+            elem: '#Cndate'
+        });
+    })
+    function closewin() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>

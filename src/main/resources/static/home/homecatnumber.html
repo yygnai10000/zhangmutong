@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-btn-group demoTable">
+    <button  class="layui-btn layui-btn-lg" onclick="addcat()">新增车次</button>
+
+    <button  class="layui-btn layui-btn-normal  layui-btn-lg layui-btn-radius" onclick="refresh()">刷新</button>
+</div>
+<table class="layui-table" lay-data="{ url:'/catmanage/pagequery', page:true, id:'catmanage'}" lay-filter="catmanage">
+    <thead>
+    <tr>
+        <th lay-data="{field:'numberid', align:'center',width:150 }">车次序号</th>
+        <th lay-data="{field:'startsite',align:'center', width:150, edit: 'text'}">起始地</th>
+        <th lay-data="{field:'endsite', align:'center',width:150, edit: 'text'}">结束地</th>
+        <th lay-data="{field:'starttime', align:'center',width:180, edit: 'text'}">发车时间</th>
+        <th lay-data="{field:'endtime', align:'center', minWidth: 120}">结束时间</th>
+        <th lay-data="{field:'driverid', align:'center', minWidth: 100}">司机</th>
+        <th lay-data="{field:'catid', align:'center', minWidth: 100}">车牌号</th>
+        <th lay-data="{field:'operation',  minWidth: 200 ,align:'center', toolbar: '#barDemo'}">操作</th>
+    </tr>
+    </thead>
+</table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        //监听单元格编辑
+        table.on('edit(catmanage)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            //修改字段
+            layer.msg(field);
+            var json1 = eval("({"+field+":"+value+",numberid:"+data.numberid+"})");
+            $.get("/catmanage/updata",json1,function (data) {
+                if(data.status==200){
+                    layer.msg('[ID: '+ data.catid +'] ' + field + ' 字段更改为：'+ value);
+                }else {
+                    layer.msg('[ID: '+ data.catid +'] '+'修改失败！请稍后尝试');
+                }
+            });
+
+        });
+        //监听工具条
+        table.on('tool(catmanage)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                    $.get("/catmanage/delete",{catid: data.catid},function (data) {
+                        if(data.status=200){
+                            layer.alert('删除成功', {
+                                skin: 'layui-layer-lan'
+                                ,closeBtn: 2
+                            });
+                        }else {
+                            layer.alert('删除失败，刷新后重试！', {
+                                skin: 'layui-layer-lan'
+                                ,closeBtn: 0
+                            });
+                        }
+                    });
+                });
+            }
+        });
+    });
+    function addcat() {
+        //页面层-自定义
+        layer.open({
+            type: 2,
+            area: ['700px', '450px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'homecatnumber_add.html'
+        });
+    }
+    function refresh() {
+        location.reload();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yy.mapper.EmployerMapper" >
+  <resultMap id="BaseResultMap" type="com.yy.pojo.Employer" >
+    <id column="employerID" property="employerid" jdbcType="INTEGER" />
+    <result column="companyName" property="companyname" jdbcType="VARCHAR" />
+    <result column="principal" property="principal" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="taolu1" property="taolu1" jdbcType="VARCHAR" />
+    <result column="exigencephone" property="exigencephone" jdbcType="VARCHAR" />
+    <result column="taolu2" property="taolu2" jdbcType="VARCHAR" />
+    <result column="taolu3" property="taolu3" jdbcType="VARCHAR" />
+    <result column="companyAddress" property="companyaddress" jdbcType="VARCHAR" />
+    <result column="annotation" property="annotation" jdbcType="VARCHAR" />
+    <result column="customerprincipal" property="customerprincipal" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    employerID, companyName, principal, wechat, phone, taolu1, exigencephone, taolu2, 
+    taolu3, companyAddress, annotation, customerprincipal
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yy.pojo.EmployerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from employer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from employer
+    where employerID = #{employerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from employer
+    where employerID = #{employerid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yy.pojo.EmployerExample" >
+    delete from employer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yy.pojo.Employer" >
+    insert into employer (employerID, companyName, principal, 
+      wechat, phone, taolu1, 
+      exigencephone, taolu2, taolu3, 
+      companyAddress, annotation, customerprincipal
+      )
+    values (#{employerid,jdbcType=INTEGER}, #{companyname,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, 
+      #{wechat,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{taolu1,jdbcType=VARCHAR}, 
+      #{exigencephone,jdbcType=VARCHAR}, #{taolu2,jdbcType=VARCHAR}, #{taolu3,jdbcType=VARCHAR}, 
+      #{companyaddress,jdbcType=VARCHAR}, #{annotation,jdbcType=VARCHAR}, #{customerprincipal,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yy.pojo.Employer" >
+    insert into employer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="employerid != null" >
+        employerID,
+      </if>
+      <if test="companyname != null" >
+        companyName,
+      </if>
+      <if test="principal != null" >
+        principal,
+      </if>
+      <if test="wechat != null" >
+        wechat,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="taolu1 != null" >
+        taolu1,
+      </if>
+      <if test="exigencephone != null" >
+        exigencephone,
+      </if>
+      <if test="taolu2 != null" >
+        taolu2,
+      </if>
+      <if test="taolu3 != null" >
+        taolu3,
+      </if>
+      <if test="companyaddress != null" >
+        companyAddress,
+      </if>
+      <if test="annotation != null" >
+        annotation,
+      </if>
+      <if test="customerprincipal != null" >
+        customerprincipal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="employerid != null" >
+        #{employerid,jdbcType=INTEGER},
+      </if>
+      <if test="companyname != null" >
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="taolu1 != null" >
+        #{taolu1,jdbcType=VARCHAR},
+      </if>
+      <if test="exigencephone != null" >
+        #{exigencephone,jdbcType=VARCHAR},
+      </if>
+      <if test="taolu2 != null" >
+        #{taolu2,jdbcType=VARCHAR},
+      </if>
+      <if test="taolu3 != null" >
+        #{taolu3,jdbcType=VARCHAR},
+      </if>
+      <if test="companyaddress != null" >
+        #{companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="annotation != null" >
+        #{annotation,jdbcType=VARCHAR},
+      </if>
+      <if test="customerprincipal != null" >
+        #{customerprincipal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yy.pojo.EmployerExample" resultType="java.lang.Integer" >
+    select count(*) from employer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update employer
+    <set >
+      <if test="record.employerid != null" >
+        employerID = #{record.employerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyname != null" >
+        companyName = #{record.companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principal != null" >
+        principal = #{record.principal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechat != null" >
+        wechat = #{record.wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taolu1 != null" >
+        taolu1 = #{record.taolu1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exigencephone != null" >
+        exigencephone = #{record.exigencephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taolu2 != null" >
+        taolu2 = #{record.taolu2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taolu3 != null" >
+        taolu3 = #{record.taolu3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyaddress != null" >
+        companyAddress = #{record.companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.annotation != null" >
+        annotation = #{record.annotation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerprincipal != null" >
+        customerprincipal = #{record.customerprincipal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update employer
+    set employerID = #{record.employerid,jdbcType=INTEGER},
+      companyName = #{record.companyname,jdbcType=VARCHAR},
+      principal = #{record.principal,jdbcType=VARCHAR},
+      wechat = #{record.wechat,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      taolu1 = #{record.taolu1,jdbcType=VARCHAR},
+      exigencephone = #{record.exigencephone,jdbcType=VARCHAR},
+      taolu2 = #{record.taolu2,jdbcType=VARCHAR},
+      taolu3 = #{record.taolu3,jdbcType=VARCHAR},
+      companyAddress = #{record.companyaddress,jdbcType=VARCHAR},
+      annotation = #{record.annotation,jdbcType=VARCHAR},
+      customerprincipal = #{record.customerprincipal,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yy.pojo.Employer" >
+    update employer
+    <set >
+      <if test="companyname != null" >
+        companyName = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="taolu1 != null" >
+        taolu1 = #{taolu1,jdbcType=VARCHAR},
+      </if>
+      <if test="exigencephone != null" >
+        exigencephone = #{exigencephone,jdbcType=VARCHAR},
+      </if>
+      <if test="taolu2 != null" >
+        taolu2 = #{taolu2,jdbcType=VARCHAR},
+      </if>
+      <if test="taolu3 != null" >
+        taolu3 = #{taolu3,jdbcType=VARCHAR},
+      </if>
+      <if test="companyaddress != null" >
+        companyAddress = #{companyaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="annotation != null" >
+        annotation = #{annotation,jdbcType=VARCHAR},
+      </if>
+      <if test="customerprincipal != null" >
+        customerprincipal = #{customerprincipal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where employerID = #{employerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yy.pojo.Employer" >
+    update employer
+    set companyName = #{companyname,jdbcType=VARCHAR},
+      principal = #{principal,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      taolu1 = #{taolu1,jdbcType=VARCHAR},
+      exigencephone = #{exigencephone,jdbcType=VARCHAR},
+      taolu2 = #{taolu2,jdbcType=VARCHAR},
+      taolu3 = #{taolu3,jdbcType=VARCHAR},
+      companyAddress = #{companyaddress,jdbcType=VARCHAR},
+      annotation = #{annotation,jdbcType=VARCHAR},
+      customerprincipal = #{customerprincipal,jdbcType=VARCHAR}
+    where employerID = #{employerid,jdbcType=INTEGER}
+  </update>
+</mapper>

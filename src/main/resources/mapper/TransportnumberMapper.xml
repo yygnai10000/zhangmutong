@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yy.mapper.TransportnumberMapper" >
+  <resultMap id="BaseResultMap" type="com.yy.pojo.Transportnumber" >
+    <id column="transportID" property="transportid" jdbcType="VARCHAR" />
+    <result column="catNumber" property="catnumber" jdbcType="INTEGER" />
+    <result column="employerId" property="employerid" jdbcType="INTEGER" />
+    <result column="cargoName" property="cargoname" jdbcType="VARCHAR" />
+    <result column="cargosize" property="cargosize" jdbcType="INTEGER" />
+    <result column="fetchCargoPerson" property="fetchcargoperson" jdbcType="VARCHAR" />
+    <result column="fetchCargoPhone" property="fetchcargophone" jdbcType="INTEGER" />
+    <result column="receiveCargoPerson" property="receivecargoperson" jdbcType="VARCHAR" />
+    <result column="receiveCargoPhone" property="receivecargophone" jdbcType="INTEGER" />
+    <result column="fetchCargoAddress" property="fetchcargoaddress" jdbcType="VARCHAR" />
+    <result column="receiveCargoAddress" property="receivecargoaddress" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="statusMsg" property="statusmsg" jdbcType="VARCHAR" />
+    <result column="clearingStatus" property="clearingstatus" jdbcType="INTEGER" />
+    <result column="clearingMsg" property="clearingmsg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    transportID, catNumber, employerId, cargoName, cargosize, fetchCargoPerson, fetchCargoPhone, 
+    receiveCargoPerson, receiveCargoPhone, fetchCargoAddress, receiveCargoAddress, status, 
+    statusMsg, clearingStatus, clearingMsg
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yy.pojo.TransportnumberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transportnumber
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from transportnumber
+    where transportID = #{transportid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from transportnumber
+    where transportID = #{transportid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yy.pojo.TransportnumberExample" >
+    delete from transportnumber
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yy.pojo.Transportnumber" >
+    insert into transportnumber (transportID, catNumber, employerId, 
+      cargoName, cargosize, fetchCargoPerson, 
+      fetchCargoPhone, receiveCargoPerson, receiveCargoPhone, 
+      fetchCargoAddress, receiveCargoAddress, 
+      status, statusMsg, clearingStatus, 
+      clearingMsg)
+    values (#{transportid,jdbcType=VARCHAR}, #{catnumber,jdbcType=INTEGER}, #{employerid,jdbcType=INTEGER}, 
+      #{cargoname,jdbcType=VARCHAR}, #{cargosize,jdbcType=INTEGER}, #{fetchcargoperson,jdbcType=VARCHAR}, 
+      #{fetchcargophone,jdbcType=INTEGER}, #{receivecargoperson,jdbcType=VARCHAR}, #{receivecargophone,jdbcType=INTEGER}, 
+      #{fetchcargoaddress,jdbcType=VARCHAR}, #{receivecargoaddress,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{statusmsg,jdbcType=VARCHAR}, #{clearingstatus,jdbcType=INTEGER}, 
+      #{clearingmsg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yy.pojo.Transportnumber" >
+    insert into transportnumber
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="transportid != null" >
+        transportID,
+      </if>
+      <if test="catnumber != null" >
+        catNumber,
+      </if>
+      <if test="employerid != null" >
+        employerId,
+      </if>
+      <if test="cargoname != null" >
+        cargoName,
+      </if>
+      <if test="cargosize != null" >
+        cargosize,
+      </if>
+      <if test="fetchcargoperson != null" >
+        fetchCargoPerson,
+      </if>
+      <if test="fetchcargophone != null" >
+        fetchCargoPhone,
+      </if>
+      <if test="receivecargoperson != null" >
+        receiveCargoPerson,
+      </if>
+      <if test="receivecargophone != null" >
+        receiveCargoPhone,
+      </if>
+      <if test="fetchcargoaddress != null" >
+        fetchCargoAddress,
+      </if>
+      <if test="receivecargoaddress != null" >
+        receiveCargoAddress,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="statusmsg != null" >
+        statusMsg,
+      </if>
+      <if test="clearingstatus != null" >
+        clearingStatus,
+      </if>
+      <if test="clearingmsg != null" >
+        clearingMsg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="transportid != null" >
+        #{transportid,jdbcType=VARCHAR},
+      </if>
+      <if test="catnumber != null" >
+        #{catnumber,jdbcType=INTEGER},
+      </if>
+      <if test="employerid != null" >
+        #{employerid,jdbcType=INTEGER},
+      </if>
+      <if test="cargoname != null" >
+        #{cargoname,jdbcType=VARCHAR},
+      </if>
+      <if test="cargosize != null" >
+        #{cargosize,jdbcType=INTEGER},
+      </if>
+      <if test="fetchcargoperson != null" >
+        #{fetchcargoperson,jdbcType=VARCHAR},
+      </if>
+      <if test="fetchcargophone != null" >
+        #{fetchcargophone,jdbcType=INTEGER},
+      </if>
+      <if test="receivecargoperson != null" >
+        #{receivecargoperson,jdbcType=VARCHAR},
+      </if>
+      <if test="receivecargophone != null" >
+        #{receivecargophone,jdbcType=INTEGER},
+      </if>
+      <if test="fetchcargoaddress != null" >
+        #{fetchcargoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivecargoaddress != null" >
+        #{receivecargoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="statusmsg != null" >
+        #{statusmsg,jdbcType=VARCHAR},
+      </if>
+      <if test="clearingstatus != null" >
+        #{clearingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="clearingmsg != null" >
+        #{clearingmsg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yy.pojo.TransportnumberExample" resultType="java.lang.Integer" >
+    select count(*) from transportnumber
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update transportnumber
+    <set >
+      <if test="record.transportid != null" >
+        transportID = #{record.transportid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catnumber != null" >
+        catNumber = #{record.catnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.employerid != null" >
+        employerId = #{record.employerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cargoname != null" >
+        cargoName = #{record.cargoname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cargosize != null" >
+        cargosize = #{record.cargosize,jdbcType=INTEGER},
+      </if>
+      <if test="record.fetchcargoperson != null" >
+        fetchCargoPerson = #{record.fetchcargoperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fetchcargophone != null" >
+        fetchCargoPhone = #{record.fetchcargophone,jdbcType=INTEGER},
+      </if>
+      <if test="record.receivecargoperson != null" >
+        receiveCargoPerson = #{record.receivecargoperson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivecargophone != null" >
+        receiveCargoPhone = #{record.receivecargophone,jdbcType=INTEGER},
+      </if>
+      <if test="record.fetchcargoaddress != null" >
+        fetchCargoAddress = #{record.fetchcargoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receivecargoaddress != null" >
+        receiveCargoAddress = #{record.receivecargoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.statusmsg != null" >
+        statusMsg = #{record.statusmsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clearingstatus != null" >
+        clearingStatus = #{record.clearingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.clearingmsg != null" >
+        clearingMsg = #{record.clearingmsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update transportnumber
+    set transportID = #{record.transportid,jdbcType=VARCHAR},
+      catNumber = #{record.catnumber,jdbcType=INTEGER},
+      employerId = #{record.employerid,jdbcType=INTEGER},
+      cargoName = #{record.cargoname,jdbcType=VARCHAR},
+      cargosize = #{record.cargosize,jdbcType=INTEGER},
+      fetchCargoPerson = #{record.fetchcargoperson,jdbcType=VARCHAR},
+      fetchCargoPhone = #{record.fetchcargophone,jdbcType=INTEGER},
+      receiveCargoPerson = #{record.receivecargoperson,jdbcType=VARCHAR},
+      receiveCargoPhone = #{record.receivecargophone,jdbcType=INTEGER},
+      fetchCargoAddress = #{record.fetchcargoaddress,jdbcType=VARCHAR},
+      receiveCargoAddress = #{record.receivecargoaddress,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      statusMsg = #{record.statusmsg,jdbcType=VARCHAR},
+      clearingStatus = #{record.clearingstatus,jdbcType=INTEGER},
+      clearingMsg = #{record.clearingmsg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yy.pojo.Transportnumber" >
+    update transportnumber
+    <set >
+      <if test="catnumber != null" >
+        catNumber = #{catnumber,jdbcType=INTEGER},
+      </if>
+      <if test="employerid != null" >
+        employerId = #{employerid,jdbcType=INTEGER},
+      </if>
+      <if test="cargoname != null" >
+        cargoName = #{cargoname,jdbcType=VARCHAR},
+      </if>
+      <if test="cargosize != null" >
+        cargosize = #{cargosize,jdbcType=INTEGER},
+      </if>
+      <if test="fetchcargoperson != null" >
+        fetchCargoPerson = #{fetchcargoperson,jdbcType=VARCHAR},
+      </if>
+      <if test="fetchcargophone != null" >
+        fetchCargoPhone = #{fetchcargophone,jdbcType=INTEGER},
+      </if>
+      <if test="receivecargoperson != null" >
+        receiveCargoPerson = #{receivecargoperson,jdbcType=VARCHAR},
+      </if>
+      <if test="receivecargophone != null" >
+        receiveCargoPhone = #{receivecargophone,jdbcType=INTEGER},
+      </if>
+      <if test="fetchcargoaddress != null" >
+        fetchCargoAddress = #{fetchcargoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receivecargoaddress != null" >
+        receiveCargoAddress = #{receivecargoaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="statusmsg != null" >
+        statusMsg = #{statusmsg,jdbcType=VARCHAR},
+      </if>
+      <if test="clearingstatus != null" >
+        clearingStatus = #{clearingstatus,jdbcType=INTEGER},
+      </if>
+      <if test="clearingmsg != null" >
+        clearingMsg = #{clearingmsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where transportID = #{transportid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yy.pojo.Transportnumber" >
+    update transportnumber
+    set catNumber = #{catnumber,jdbcType=INTEGER},
+      employerId = #{employerid,jdbcType=INTEGER},
+      cargoName = #{cargoname,jdbcType=VARCHAR},
+      cargosize = #{cargosize,jdbcType=INTEGER},
+      fetchCargoPerson = #{fetchcargoperson,jdbcType=VARCHAR},
+      fetchCargoPhone = #{fetchcargophone,jdbcType=INTEGER},
+      receiveCargoPerson = #{receivecargoperson,jdbcType=VARCHAR},
+      receiveCargoPhone = #{receivecargophone,jdbcType=INTEGER},
+      fetchCargoAddress = #{fetchcargoaddress,jdbcType=VARCHAR},
+      receiveCargoAddress = #{receivecargoaddress,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      statusMsg = #{statusmsg,jdbcType=VARCHAR},
+      clearingStatus = #{clearingstatus,jdbcType=INTEGER},
+      clearingMsg = #{clearingmsg,jdbcType=VARCHAR}
+    where transportID = #{transportid,jdbcType=VARCHAR}
+  </update>
+</mapper>

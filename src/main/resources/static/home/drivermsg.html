@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+<div class="layui-elem-field site-demo-button" style="height: 100% ;width: 100%">
+    <ul >
+        <li style="float: left"><button  class="layui-btn layui-btn-lg" onclick="adddriver()">新增司机</button></li>
+        <li style="float: left;margin-left: 20px"><button  class="layui-btn layui-btn-lg" onclick="updatedriver()">修改</button></li>
+        <li style="float: left;margin-left: 20px"><button  class="layui-btn layui-btn-normal  layui-btn-lg layui-btn-radius" onclick="refresh()">刷新</button></li>
+        <li style="float: left;margin-left: 20%">
+            <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <input  type="checkbox" name="findignore" title="忽略作废信息"  checked id="findignore">
+            </div>
+            </form>
+        </li>
+        <li style="float: left;margin-left: 20px"><input  class="layui-input" type="text" name="searchcontent" placeholder="请输入需要搜索的司机序号"></li>
+        <li style="float: left"><button  class="layui-btn" onclick="testclick()">搜索</button></li>
+    </ul>
+</div>
+<hr>
+<div >
+<table class="layui-table" lay-data="{ url:'/driver/pagequery', page:true, id:'driver'}" lay-filter="driver">
+    <thead>
+    <tr>
+        <th lay-data="{field:'driverid', align:'center',width:120 }">司机序号</th>
+        <th lay-data="{field:'drivername',align:'center', width:120, edit: 'text'}">司机姓名</th>
+        <th lay-data="{field:'wechat', align:'center',width:150, edit: 'text'}">微信号或者qq</th>
+        <th lay-data="{field:'phone', align:'center',width:180, edit: 'text'}">联系电话</th>
+        <th lay-data="{field:'exigencyphone', align:'center', minWidth: 120, edit: 'text'}">紧急电话</th>
+        <th lay-data="{field:'address', align:'center', minWidth: 100, edit: 'text'}">常驻地址</th>
+        <th lay-data="{field:'driverstatus', align:'center', minWidth: 100}">状态</th>
+        <th lay-data="{field:'operation',  minWidth: 150 ,align:'center', toolbar: '#barDemo'}">操作</th>
+    </tr>
+    </thead>
+</table>
+</div>
+</div>=
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">作废</a>
+</script>
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use(['element','table','form'], function(){
+        var table = layui.table;
+        //监听单元格编辑
+        table.on('edit(driver)', function(obj){
+            var value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            //修改字段
+            layer.msg(field);
+            var json1 = eval("({"+field+":"+value+",driverid:"+data.driverid+"})");
+            $.get("/driver/updata",json1,function (data) {
+                if(data.status==200){
+                    layer.msg( field + ' 字段更改为：'+ value);
+                }else {
+                    layer.msg(field+'修改失败！请稍后尝试');
+                }
+            });
+
+         });
+        //监听工具条
+        table.on('tool(driver)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的作废吗', function(index){
+                    obj.del();
+                    layer.close(index);
+                    $.get("/driver/delete",{driverid: data.driverid},function (data) {
+                        if(data.status=200){
+                            layer.alert('成功', {
+                                skin: 'layui-layer-lan'
+                                ,closeBtn: 2
+                            });
+                        }else {
+                            layer.alert('失败，刷新后重试！', {
+                                skin: 'layui-layer-lan'
+                                ,closeBtn: 0
+                            });
+                        }
+                    });
+                });
+            }
+        });
+    });
+    function adddriver() {
+        //页面层-自定义
+        layer.open({
+            type: 2,
+            area: ['700px', '450px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: 'drivermsg_add.html'
+        });
+    }
+    //刷新页面
+    function refresh() {
+        location.reload();
+    }
+    //test点击方法
+    function testclick() {
+    }
+</script>
+</body>
+</html>

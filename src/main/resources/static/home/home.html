@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">账目通</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="javascript:;" onclick="exportExcel()">导出Excel</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    管理员
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">运送管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" onclick="catnumber()">车次信息</a></dd>
+                        <dd><a href="javascript:;" onclick="carriageOrder()">运送账单</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">账目管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">进出账目</a></dd>
+                        <dd><a href="javascript:;">燃油消耗</a></dd>
+                        <dd><a href="javascript:;">员工出行补助</a></dd>
+                        <dd><a href="javascript:;">周期账目视图</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">基础设施人员信息</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" onclick="catmanage()">车辆信息管理</a></dd>
+                        <dd><a href="javascript:;" onclick="drivermsg()">司机信息管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">客户</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" onclick="customer()">客户管理</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item">
+                    <a href="javascript:;">员工福利</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">司机保险</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">生活其他账单</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">零碎开销记录</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">操作记录</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" onclick="queryday()">最近一天</a></dd>
+                        <dd><a href="javascript:;" onclick="queryweek()">最近一周</a></dd>
+                        <dd><a href="javascript:;" onclick="querydefined()">自定义查询</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body" id="home_body" style="height: 600px;scrolling: no">
+        <!-- 内容主体区域 -->
+        <div class="layui-tab  layui-tab-card" lay-filter="demo" style="height: 600px;scrolling: no">
+            <ul class="layui-tab-title" style=" ">
+                <li class="layui-this" lay-id="tongzhi">通知</li>
+            </ul>
+            <div class="layui-tab-content" style="height: 600px;scrolling: no">
+                <div class="layui-tab-item" >内容2</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/layui.js"></script>
+<script>
+    layui.use('element', function () {
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+        //监听导航点击
+        element.on('nav(demo)', function (elem) {
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+    //基础设施人员信息t
+    function catmanage() {
+        var element = layui.element;
+        var li = $("li[lay-id=" + "catmanage" + "]").length;
+        if (li > 0) {
+            element.tabChange('demo', 'catmanage');
+        } else {
+            element.tabAdd('demo', {
+                title: '车辆信息管理'
+                ,
+                content: '<iframe data-frameid="' + "catmanage" + '" frameborder="0" name="content" scrolling="yes" width="100%" height="600px" src="' + 'homecatmanage.html' + '"></iframe>'
+                ,
+                id: 'catmanage'
+            });
+            element.tabChange('demo', 'catmanage');
+        }
+    }
+    function catnumber() {
+        var element = layui.element;
+        var li = $("li[lay-id=" + "catnumber" + "]").length;
+        if (li > 0) {
+            element.tabChange('demo', 'catnumber');
+        } else {
+            element.tabAdd('demo', {
+                title: '车次信息管理'
+                ,
+                content: '<iframe data-frameid="' + "catnumber" + '" frameborder="0" name="content" scrolling="yes" width="100%" height="600px" src="' + 'homecatnumber.html' + '"></iframe>'
+                ,
+                id: 'catnumber'
+            });
+            element.tabChange('demo', 'catnumber');
+        }
+    }
+    function drivermsg() {
+        var element = layui.element;
+        var li = $("li[lay-id=" + "drivermsg" + "]").length;
+        if (li > 0) {
+            element.tabChange('demo', 'drivermsg');
+        } else {
+            element.tabAdd('demo', {
+                title: '司机信息管理'
+                ,
+                content: '<iframe data-frameid="' + "drivermsg" + '" frameborder="0" name="content" scrolling="yes" width="100%" height="600px" src="' + 'drivermsg.html' + '"></iframe>'
+                ,
+                id: 'drivermsg'
+            });
+            element.tabChange('demo', 'drivermsg');
+        }
+    }
+    //运单  carriageOrder
+    function carriageOrder() {
+        var element = layui.element;
+        var li = $("li[lay-id=" + "carriageOrder" + "]").length;
+        if (li > 0) {
+            element.tabChange('demo', 'carriageOrder');
+        } else {
+            element.tabAdd('demo', {
+                title: '运单管理'
+                , content: 'a'
+                , id: 'carriageOrder'
+            });
+            element.tabChange('demo', 'carriageOrder');
+        }
+    }
+    function customer() {
+        var element = layui.element;
+        var li = $("li[lay-id=" + "customer" + "]").length;
+        if (li > 0) {
+            element.tabChange('demo', 'customer');
+        } else {
+            element.tabAdd('demo', {
+                title: '客户管理'
+                , content: 'a'
+                , id: 'customer'
+            });
+            element.tabChange('demo', 'customer');
+        }
+    }
+    //操作记录
+    function queryday() {
+        var element = layui.element;
+        var li = $("li[lay-id=" + "queryday" + "]").length;
+        if (li > 0) {
+            element.tabChange('demo', 'queryday');
+        } else {
+            element.tabAdd('demo', {
+                title: '最近一天'
+                ,
+                content: '<iframe data-frameid="' + "queryday" + '" frameborder="0" name="content" scrolling="yes" width="100%" height="600px" src="' + 'queryday.html' + '"></iframe>'
+                ,
+                id: 'queryday'
+            });
+            element.tabChange('demo', 'queryday');
+        }
+    }
+    function queryweek() {
+        var element = layui.element;
+        var li = $("li[lay-id=" + "queryweek" + "]").length;
+        if (li > 0) {
+            element.tabChange('demo', 'queryweek');
+        } else {
+            element.tabAdd('demo', {
+                title: '最近一周'
+                ,
+                content: '<iframe data-frameid="' + "queryweek" + '" frameborder="0" name="content" scrolling="yes" width="100%" height="650px" src="' + 'queryweek.html' + '"></iframe>'
+                ,
+                id: 'queryweek'
+            });
+            element.tabChange('demo', 'queryweek');
+        }
+    }
+    function querydefined() {
+        var element = layui.element;
+        var li = $("li[lay-id=" + "querydefined" + "]").length;
+        if (li > 0) {
+            element.tabChange('demo', 'querydefined');
+        } else {
+            element.tabAdd('demo', {
+                title: '自定义查询记录'
+                ,
+                content: '<iframe data-frameid="' + "querydefined" + '" frameborder="0" name="content" scrolling="yes" width="100%" height="650px" src="' + 'querydefined.html' + '"></iframe>'
+                ,
+                id: 'querydefined'
+            });
+            element.tabChange('demo', 'querydefined');
+        }
+    }
+    //exportExcel
+    function exportExcel() {
+        alert("导出excel");
+    }
+</script>
+</body>
+</html>
+</html>

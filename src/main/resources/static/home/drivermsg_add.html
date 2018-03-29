@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="../js/jquery.min.js"></script>
+    <script src="../layui/layui.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="drivername" required  lay-verify="required" placeholder="输入员工姓名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信号</label>
+        <div class="layui-input-block">
+            <input type="text" name="wechat"  placeholder="请输入微信号（可以为空）" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" required lay-verify="required" placeholder="请输入联系电话号码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">紧急联系电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="exigencyphone"  placeholder="输入备用联系电话（可以为空）" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">住址</label>
+        <div class="layui-input-block">
+            <input type="text" name="address" required lay-verify="required" placeholder="常用住址" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" type="button" lay-submit lay-filter="formAdddriver">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <button type="reset" class="layui-btn layui-btn-danger" onclick="closewin()">关闭</button>
+        </div>
+    </div>
+</form>
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+        var index = parent.layer.getFrameIndex(window.name);
+        //监听提交
+        form.on('submit(formAdddriver)', function(data1){
+            $.ajax({
+                type: "post",
+                url: "/driver/add",
+                data: JSON.stringify(data1.field),
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+                success: function(data) {
+                    if(data.status==200){
+                        parent.layer.msg("添加成功");
+                        parent.layer.close(index);
+                        parent.location.reload(); // 父页面刷新
+                    }else{
+                        layer.msg(data.msg);
+                        return false;
+                    }
+                }
+            });
+        });
+    });
+    layui.use("laydate",function () {
+        var laydate = layui.laydate;
+        //常规用法
+        laydate.render({
+            elem: '#Cndate'
+        });
+    })
+    function closewin() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>
